@@ -43,26 +43,20 @@ fun App() {
             Res.drawable.image_1, Res.drawable.image_2,
             Res.drawable.image_1, Res.drawable.image_2,
             Res.drawable.image_1, Res.drawable.image_2,
+            Res.drawable.image_1, Res.drawable.image_2,
+            Res.drawable.image_1, Res.drawable.image_2,
+            Res.drawable.image_1, Res.drawable.image_2,
+            Res.drawable.image_1, Res.drawable.image_2,
+            Res.drawable.image_1, Res.drawable.image_2,
+            Res.drawable.image_1, Res.drawable.image_2,
+            Res.drawable.image_1, Res.drawable.image_2,
+            Res.drawable.image_1, Res.drawable.image_2,
+            Res.drawable.image_1,
+            Res.drawable.image_2,
+            Res.drawable.image_1,
+            Res.drawable.image_2,
         )
-        LazyRow(modifier = Modifier.fillMaxSize(),
-            verticalAlignment = Alignment.CenterVertically) {
-            items(listImages) { it ->
-                    Box(
-                        modifier = Modifier
-                            .size(50.dp)
-
-                    ) {
-                        Image(
-                            painter = painterResource(it),
-                            contentDescription = "",
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier.clip(shape = RoundedCornerShape(12.dp))
-                        )
-                    }
-
-                Spacer(Modifier.width(10.dp))
-            }
-            }
-        }
-
+        WheelLikeImageSlider(listImages)
     }
+
+}
