@@ -3,9 +3,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
@@ -24,10 +24,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalViewConfiguration
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -62,28 +64,34 @@ fun App() {
             Res.drawable.image_2,
         )
         val listState = rememberLazyListState()
-        LazyRow(
-            modifier = Modifier.fillMaxSize(),
-            verticalAlignment = Alignment.CenterVertically,
-            state = listState
-        ) {
-            itemsIndexed(listImages) { index, it ->
-                val density = LocalDensity.current
+        BoxWithConstraints {
+            LazyRow(
+                modifier = Modifier.fillMaxSize(),
+                verticalAlignment = Alignment.CenterVertically,
+                state = listState
+            ) {
+                itemsIndexed(listImages) { index, it ->
+                    val maxWidthDp: Dp = maxWidth
+                    val halfScreenSize = maxWidthDp / 2
+                    var visibleItemsCount = (listState.layoutInfo.visibleItemsInfo.size / 2).toInt()
+                    val rotation = listState.firstVisibleItemIndex * 20f
+                    Box(
+                        modifier = Modifier
+                            .size(50.dp)
+                            .graphicsLayer {
+                                rotationX = rotation
+                            }
 
-                val screenWidthPx: Float = with(LocalDensity.current) { screenWidthDp.toPx() }
-                Box(
-                    modifier = Modifier
-                        .size(50.dp)
-
-                ) {
-                    Image(
-                        painter = painterResource(it),
-                        contentDescription = "",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.clip(shape = RoundedCornerShape(12.dp))
-                    )
+                    ) {
+                        Image(
+                            painter = painterResource(it),
+                            contentDescription = "",
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.clip(shape = RoundedCornerShape(12.dp))
+                        )
+                    }
+                    Spacer(Modifier.width(10.dp))
                 }
-                Spacer(Modifier.width(10.dp))
             }
         }
     }
