@@ -72,14 +72,28 @@ fun App() {
             ) {
                 itemsIndexed(listImages) { index, it ->
                     val maxWidthDp: Dp = maxWidth
-                    val halfScreenSize = maxWidthDp / 2
-                    var visibleItemsCount = (listState.layoutInfo.visibleItemsInfo.size / 2).toInt()
-                    val rotation = listState.firstVisibleItemIndex * 20f
+                    val compositeState = remember {
+                        derivedStateOf {
+                            Pair(
+                                listState.firstVisibleItemIndex,
+                                listState.firstVisibleItemScrollOffset
+                            )
+                        }
+                    }
+                    val halfScreenSize = (maxWidthDp / 2)
+
+                    var visibleItemsCount = (listState.layoutInfo.visibleItemsInfo.size / 2)
+                    val rotation =
+                        dpToPx(halfScreenSize / 27) - (10f * (index - compositeState.value.first) - (compositeState.value.second / 25f))
+                    val hot =
+                    dpToPx(halfScreenSize / 30) - (1f * (index - compositeState.value.first) - (compositeState.value.second ))
+                    println("rotation : $rotation")
+
                     Box(
                         modifier = Modifier
-                            .size(50.dp)
+                            .size(70.dp)
                             .graphicsLayer {
-                                rotationX = rotation
+                                rotationY = -(rotation * 1.7f)
                             }
 
                     ) {
@@ -90,7 +104,7 @@ fun App() {
                             modifier = Modifier.clip(shape = RoundedCornerShape(12.dp))
                         )
                     }
-                    Spacer(Modifier.width(10.dp))
+                    Spacer(Modifier.width(5.dp))
                 }
             }
         }

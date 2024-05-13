@@ -13,6 +13,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import org.jetbrains.compose.resources.DrawableResource
@@ -66,4 +68,12 @@ fun WheelLikeImageSlider(images: List<DrawableResource>) {
             }
         }
     }
+}
+
+@Composable
+fun dpToPx(dpValue: Dp): Float {
+    // Access the local density context
+    val density = LocalDensity.current
+    // Convert Dp to pixel as Float
+    return with(density) { dpValue.toPx() }
 }
