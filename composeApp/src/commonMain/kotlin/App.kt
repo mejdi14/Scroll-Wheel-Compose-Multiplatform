@@ -5,9 +5,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -23,6 +25,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.painter.Painter
@@ -65,6 +68,7 @@ fun App() {
         )
         val listState = rememberLazyListState()
         BoxWithConstraints {
+            BottomGradientLayer(Modifier.align(Alignment.BottomCenter))
             LazyRow(
                 modifier = Modifier.fillMaxSize(),
                 verticalAlignment = Alignment.CenterVertically,
@@ -93,7 +97,10 @@ fun App() {
                         modifier = Modifier
                             .size(70.dp)
                             .graphicsLayer {
-                                rotationY = -(rotation * 1.7f)
+                                rotationY = -(rotation * 1.5f)
+                                scaleX = if (index == 0 || index  == 4) 0.9f else 1f
+                                scaleY = if (index == 0 || index  == 4) 0.8f else 1f
+
                             }
 
                     ) {
@@ -110,4 +117,25 @@ fun App() {
         }
     }
 
+}
+
+@Composable
+fun BottomGradientLayer(modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(90.dp)
+            .background(
+                brush = Brush.horizontalGradient(
+                    colors = listOf(
+                        Color.Transparent,
+                        Color.White.copy(alpha = 1f)
+                    ),
+                    startX = 0f,
+                    endX = Float.POSITIVE_INFINITY
+                )
+            ),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {}
 }
