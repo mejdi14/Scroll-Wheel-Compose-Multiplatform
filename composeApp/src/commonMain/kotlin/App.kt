@@ -32,6 +32,13 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import scrollwheeldemo.composeapp.generated.resources.Res
 import scrollwheeldemo.composeapp.generated.resources.image_1
 import scrollwheeldemo.composeapp.generated.resources.image_2
+import scrollwheeldemo.composeapp.generated.resources.image_3
+import scrollwheeldemo.composeapp.generated.resources.image_4
+import scrollwheeldemo.composeapp.generated.resources.image_5
+import scrollwheeldemo.composeapp.generated.resources.image_6
+import scrollwheeldemo.composeapp.generated.resources.image_7
+import scrollwheeldemo.composeapp.generated.resources.image_8
+import ui.SideGradientBackground
 import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalResourceApi::class)
@@ -41,13 +48,13 @@ fun App() {
     MaterialTheme {
         val listImages = listOf(
             Res.drawable.image_1, Res.drawable.image_2,
+            Res.drawable.image_3, Res.drawable.image_4,
+            Res.drawable.image_5, Res.drawable.image_6,
+            Res.drawable.image_7, Res.drawable.image_8,
             Res.drawable.image_1, Res.drawable.image_2,
-            Res.drawable.image_1, Res.drawable.image_2,
-            Res.drawable.image_1, Res.drawable.image_2,
-            Res.drawable.image_1, Res.drawable.image_2,
-            Res.drawable.image_1, Res.drawable.image_2,
-            Res.drawable.image_1, Res.drawable.image_2,
-            Res.drawable.image_1, Res.drawable.image_2,
+            Res.drawable.image_3, Res.drawable.image_4,
+            Res.drawable.image_5, Res.drawable.image_6,
+            Res.drawable.image_7, Res.drawable.image_8,
             Res.drawable.image_1, Res.drawable.image_2,
             Res.drawable.image_1, Res.drawable.image_2,
             Res.drawable.image_1, Res.drawable.image_2,
@@ -100,11 +107,11 @@ fun App() {
 
                     Box(
                         modifier = Modifier
-                            .size(70.dp)
+                            .size(75.dp)
                             .graphicsLayer {
-                                rotationY = -(rotation * 1.6f)
-                                scaleX = (1f -((rotation.absoluteValue ) / 200) )
-                                //scaleY = 1f - hot
+                                rotationY = -(rotation * 1.2f)
+                                scaleX = (1f -((rotation.absoluteValue ) / 150) )
+                                scaleY = (1f -((rotation.absoluteValue ) / 150) )
 
 
                             }
@@ -121,7 +128,7 @@ fun App() {
                 }
 
             }
-            BottomGradientLayer(Modifier.align(Alignment.CenterStart), Brush.horizontalGradient(
+            SideGradientBackground(Modifier.align(Alignment.CenterStart), Brush.horizontalGradient(
                 colors = listOf(
                     Color.Transparent,
                     Color.White.copy(alpha = 1f)
@@ -129,7 +136,7 @@ fun App() {
                 startX = Float.POSITIVE_INFINITY,
                 endX = 0f
             ))
-            BottomGradientLayer(
+            SideGradientBackground(
                 Modifier.align(Alignment.CenterEnd), Brush.horizontalGradient(
                     colors = listOf(
                         Color.Transparent,
@@ -142,18 +149,4 @@ fun App() {
         }
     }
 
-}
-
-@Composable
-fun BottomGradientLayer(modifier: Modifier = Modifier, horizontalGradient: Brush) {
-    Row(
-        modifier = modifier
-            .fillMaxHeight()
-            .width(60.dp)
-            .background(
-                brush = horizontalGradient
-            ),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {}
 }
