@@ -33,6 +33,7 @@ kotlin {
             implementation(libs.androidx.activity.compose)
         }
         commonMain.dependencies {
+            implementation("co.touchlab:kermit:2.0.3")
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
