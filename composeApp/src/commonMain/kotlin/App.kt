@@ -1,11 +1,8 @@
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -24,7 +21,6 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import co.touchlab.kermit.Logger
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -38,6 +34,8 @@ import scrollwheeldemo.composeapp.generated.resources.image_5
 import scrollwheeldemo.composeapp.generated.resources.image_6
 import scrollwheeldemo.composeapp.generated.resources.image_7
 import scrollwheeldemo.composeapp.generated.resources.image_8
+import ui.LeftSideShadowLines
+import ui.RightSideShadowLines
 import ui.SideGradientBackground
 import kotlin.math.absoluteValue
 
@@ -93,17 +91,10 @@ fun App() {
                     val maxDistance = dpToPx(maxWidthDp) / 2
                     val scale = 1 - 0.2 * (distanceFromCenter / maxDistance).coerceIn(0f, 1f)
 
-                    var visibleItemsCount = (listState.layoutInfo.visibleItemsInfo.size / 2)
                     val rotation =
                         dpToPx(halfScreenSize / 27) - (10f * (index - compositeState.value.first) - (compositeState.value.second / 25f))
-                    val hot =
-                    dpToPx(halfScreenSize / 200) - ( ((index - compositeState.value.first) * (compositeState.value.second )) / 200)
 
-                    if(index == 4){
 
-                    Logger.i("hot1 ${rotation}")
-                    Logger.i("hot2 ${(1f -(rotation / 100) )}")
-                    }
 
                     Box(
                         modifier = Modifier
@@ -128,25 +119,10 @@ fun App() {
                 }
 
             }
-            SideGradientBackground(Modifier.align(Alignment.CenterStart), Brush.horizontalGradient(
-                colors = listOf(
-                    Color.Transparent,
-                    Color.White.copy(alpha = 1f)
-                ),
-                startX = Float.POSITIVE_INFINITY,
-                endX = 0f
-            ))
-            SideGradientBackground(
-                Modifier.align(Alignment.CenterEnd), Brush.horizontalGradient(
-                    colors = listOf(
-                        Color.Transparent,
-                        Color.White.copy(alpha = 1f)
-                    ),
-                    startX = 0f,
-                    endX = Float.POSITIVE_INFINITY
-                )
-            )
+            LeftSideShadowLines(modifier = Modifier.align(Alignment.CenterStart))
+            RightSideShadowLines(modifier = Modifier.align(Alignment.CenterEnd))
         }
     }
 
 }
+
