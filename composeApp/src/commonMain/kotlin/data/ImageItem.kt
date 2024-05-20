@@ -1,6 +1,5 @@
 package data
 
-import androidx.compose.ui.geometry.Size
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import scrollwheeldemo.composeapp.generated.resources.Res

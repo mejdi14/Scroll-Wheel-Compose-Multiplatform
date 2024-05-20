@@ -1,13 +1,12 @@
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import data.ImageItem
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.ui.tooling.preview.Preview
-
 import scrollwheeldemo.composeapp.generated.resources.Res
 import scrollwheeldemo.composeapp.generated.resources.image_1
 import scrollwheeldemo.composeapp.generated.resources.image_2
