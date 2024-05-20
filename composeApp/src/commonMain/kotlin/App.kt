@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import data.ImageItem
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -45,22 +46,16 @@ import kotlin.math.absoluteValue
 fun App() {
     MaterialTheme {
         val listImages = listOf(
-            Res.drawable.image_1, Res.drawable.image_2,
-            Res.drawable.image_3, Res.drawable.image_4,
-            Res.drawable.image_5, Res.drawable.image_6,
-            Res.drawable.image_7, Res.drawable.image_8,
-            Res.drawable.image_1, Res.drawable.image_2,
-            Res.drawable.image_3, Res.drawable.image_4,
-            Res.drawable.image_5, Res.drawable.image_6,
-            Res.drawable.image_7, Res.drawable.image_8,
-            Res.drawable.image_1, Res.drawable.image_2,
-            Res.drawable.image_1, Res.drawable.image_2,
-            Res.drawable.image_1, Res.drawable.image_2,
-            Res.drawable.image_1, Res.drawable.image_2,
-            Res.drawable.image_1,
-            Res.drawable.image_2,
-            Res.drawable.image_1,
-            Res.drawable.image_2,
+            ImageItem(Res.drawable.image_1), ImageItem(Res.drawable.image_2),
+            ImageItem(Res.drawable.image_3), ImageItem(Res.drawable.image_4),
+            ImageItem(Res.drawable.image_5), ImageItem(Res.drawable.image_6),
+            ImageItem(Res.drawable.image_7), ImageItem(Res.drawable.image_8),
+            ImageItem(Res.drawable.image_1), ImageItem(Res.drawable.image_2),
+            ImageItem(Res.drawable.image_3), ImageItem(Res.drawable.image_4),
+            ImageItem(Res.drawable.image_5), ImageItem(Res.drawable.image_6),
+            ImageItem(Res.drawable.image_7), ImageItem(Res.drawable.image_8),
+            ImageItem(Res.drawable.image_1), ImageItem(Res.drawable.image_2),
+            ImageItem(Res.drawable.image_1), ImageItem(Res.drawable.image_2),
         )
         val listState = rememberLazyListState()
         BoxWithConstraints {
@@ -70,7 +65,7 @@ fun App() {
                 verticalAlignment = Alignment.CenterVertically,
                 state = listState
             ) {
-                itemsIndexed(listImages) { index, it ->
+                itemsIndexed(listImages) { index, imageItem ->
                     val maxWidthDp: Dp = maxWidth
                     val compositeState = remember {
                         derivedStateOf {
@@ -81,48 +76,32 @@ fun App() {
                         }
                     }
                     val halfScreenSize = (maxWidthDp / 2)
-                    val imageCenter = listState.firstVisibleItemIndex * (dpToPx(70.dp) + dpToPx(10.dp)) +
-                            listState.firstVisibleItemScrollOffset +
-                            index * (dpToPx(70.dp)  + dpToPx(10.dp)) +
-                            dpToPx(70.dp)  / 2
-
-                    // Compute scale based on the distance from the center of the screen
-                    val distanceFromCenter = kotlin.math.abs(imageCenter - dpToPx(halfScreenSize))
-                    val maxDistance = dpToPx(maxWidthDp) / 2
-                    val scale = 1 - 0.2 * (distanceFromCenter / maxDistance).coerceIn(0f, 1f)
 
                     val rotation =
-                        dpToPx(halfScreenSize / 27) - (10f * (index - compositeState.value.first) - (compositeState.value.second / 25f))
-
-
-
+                        dpToPx(halfScreenSize / imageItem.rotationExtraSpace) - (10f * (index - compositeState.value.first) - (compositeState.value.second / 25f))
+                    val scale = (1f - ((rotation.absoluteValue) / imageItem.scaleLeaningDegree))
                     Box(
                         modifier = Modifier
-                            .size(75.dp)
+                            .size(imageItem.size.dp)
                             .graphicsLayer {
-                                rotationY = -(rotation * 1.2f)
-                                scaleX = (1f -((rotation.absoluteValue ) / 150) )
-                                scaleY = (1f -((rotation.absoluteValue ) / 150) )
-
-
+                                rotationY = -(rotation * imageItem.rotationDegree)
+                                scaleX = scale
+                                scaleY = scale
                             }
 
                     ) {
                         Image(
-                            painter = painterResource(it),
+                            painter = painterResource(imageItem.image),
                             contentDescription = "",
                             contentScale = ContentScale.Crop,
-                            modifier = Modifier.clip(shape = RoundedCornerShape(12.dp))
+                            modifier = Modifier.clip(shape = RoundedCornerShape(imageItem.cornerRadius.dp))
                         )
                     }
-                    Spacer(Modifier.width(5.dp))
+                    Spacer(Modifier.width(imageItem.spaceBetween.dp))
                 }
-
             }
             LeftSideShadowLines(modifier = Modifier.align(Alignment.CenterStart))
             RightSideShadowLines(modifier = Modifier.align(Alignment.CenterEnd))
         }
     }
-
 }
-
